@@ -54,6 +54,7 @@
     <Compile Include="DateTimeSpan.cs" />
     <Compile Include="EnumExtensions.cs" />
     <Compile Include="EnumHelper.cs" />
+    <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="FileSizeFormatProvider.cs" />
     <Compile Include="Grouping.cs" />
     <Compile Include="GuidExtensions.cs" />
