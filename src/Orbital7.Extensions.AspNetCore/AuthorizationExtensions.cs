@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Security.Claims;
+using System.Security.Principal;
 
 namespace Microsoft.AspNetCore.Authorization
 {
     public static class AuthorizationExtensions
     {
-        public static Guid GetUserId(this ClaimsPrincipal principal)
+        public static Guid GetUserId(this IIdentity identity)
         {
-            if (principal == null)
-                throw new ArgumentNullException(nameof(principal));
+            if (identity == null)
+                throw new ArgumentNullException(nameof(identity));
 
-            var first = principal.FindFirst(ClaimTypes.NameIdentifier);
+            var claimsIdentity = identity as ClaimsIdentity; 
+
+            var first = claimsIdentity?.FindFirst(ClaimTypes.NameIdentifier);
             if (first != null)
                 return Guid.Parse(first.Value);
             else

@@ -63,12 +63,10 @@ namespace System
             return value.Replace(toRemove, "");
         }
 
-        public static string ToRawPhoneNumber(
-            this string value, 
-            bool includePlus1Prefix = false)
+        public static string ToPhoneNumber(this string value)
         {
-            string phoneNumber = value.NumbersOnly().PruneStart("+").PruneStart("1");
-            if (includePlus1Prefix && !phoneNumber.StartsWith("+1"))
+            string phoneNumber = value.NumbersOnly();
+            if (!phoneNumber.StartsWith("+1"))
                 phoneNumber = "+1" + phoneNumber;
 
             return phoneNumber;
@@ -79,7 +77,7 @@ namespace System
             // TODO: Expand to include non-NorthAmerican phone numbers.
 
             // Convert to numbers only 
-            var raw = value.ToRawPhoneNumber();
+            var raw = value.NumbersOnly().PruneStart("1");
             if (raw.Length >= 10)
             {
                 var template = "({0}) {1}-{2}";
@@ -320,70 +318,42 @@ namespace System
 
         public static string NumbersOnly(this string value)
         {
-            if (!string.IsNullOrEmpty(value))
-            {
-                StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
 
-                foreach (char c in value.ToCharArray())
-                {
-                    string s = c.ToString();
-                    if (NumberChars.Contains(s)) sb.Append(s);
-                }
-
-                return sb.ToString();
-            }
-            else
+            foreach (char c in value.ToCharArray())
             {
-                return null;
+                string s = c.ToString();
+                if (NumberChars.Contains(s)) sb.Append(s);
             }
+
+            return sb.ToString();
         }
 
         public static bool IsNumbers(this string value)
         {
-            if (!string.IsNullOrEmpty(value))
-            {
-                foreach (char c in value.ToCharArray())
-                    if (!NumberChars.Contains(c.ToString()))
-                        return false;
+            foreach (char c in value.ToCharArray())
+                if (!NumberChars.Contains(c.ToString()))
+                    return false;
 
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return true;
         }
 
         public static bool IsLetters(this string value)
         {
-            if (!string.IsNullOrEmpty(value))
-            {
-                foreach (char c in value.ToCharArray())
-                    if (!LetterChars.Contains(c.ToString()))
-                        return false;
+            foreach (char c in value.ToCharArray())
+                if (!LetterChars.Contains(c.ToString()))
+                    return false;
 
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return true;
         }
 
         public static bool IsAlphanumeric(this string value)
         {
-            if (!string.IsNullOrEmpty(value))
-            {
-                foreach (char c in value.ToCharArray())
-                    if (!AlphanumericChars.Contains(c.ToString()))
-                        return false;
+            foreach (char c in value.ToCharArray())
+                if (!AlphanumericChars.Contains(c.ToString()))
+                    return false;
 
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return true;
         }
 
         public static string[] Parse(this string input, bool byWhitespace, bool byPunctuation, bool includeDash, bool includeUnderscore, bool includeDelimitersInResults, bool removeEmptyEntries)
@@ -606,7 +576,7 @@ namespace System
         {
             string output = value;
 
-            if (!string.IsNullOrEmpty(value) && value.EndsWith(end))
+            if (value.EndsWith(end))
                 output = value.Substring(0, value.Length - end.Length);
 
             return output;
@@ -616,8 +586,7 @@ namespace System
         {
             string output = value;
 
-            if (!string.IsNullOrEmpty(value))
-                output = value.Substring(0, value.Length - length);
+            output = value.Substring(0, value.Length - length);
 
             return output;
         }
@@ -626,7 +595,7 @@ namespace System
         {
             string output = value;
 
-            if (!string.IsNullOrEmpty(value) && value.StartsWith(start, StringComparison.CurrentCultureIgnoreCase))
+            if (value.StartsWith(start, StringComparison.CurrentCultureIgnoreCase))
                 output = value.Substring(start.Length, value.Length - start.Length);
 
             return output;
@@ -636,8 +605,7 @@ namespace System
         {
             string output = value;
 
-            if (!string.IsNullOrEmpty(value))
-                output = value.Substring(length, value.Length - length);
+            output = value.Substring(length, value.Length - length);
 
             return output;
         }

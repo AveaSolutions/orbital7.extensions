@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Text;
 
-namespace Orbital7.Extensions
-{
-    public class PropertyException : Exception
-    {
-        public string PropertyName { get; set; }
+//namespace Orbital7.Extensions
+//{
+//    public class PropertyException : Exception
+//    {
+//        public string PropertyName { get; set; }
 
-        public PropertyException(string propertyName, string message)
-            : base(message)
-        {
-            this.PropertyName = propertyName;
-        }
-    }
-}
+//        public PropertyException(string propertyName, string message)
+//            : base(message)
+//        {
+//            this.PropertyName = propertyName;
+//        }
+//    }
+//}

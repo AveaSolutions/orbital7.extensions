@@ -100,6 +100,45 @@ namespace System
                 return nullValue;
         }
 
+        public static string ToShortDateString(this DateTime date)
+        {
+            return date.ToString("M/d/yyyy");
+        }
+
+        public static string ToShortDateString(this DateTime? date, string nullValue = "")
+        {
+            if (date.HasValue)
+                return date.Value.ToShortDateString();
+            else
+                return nullValue;
+        }
+
+        public static string ToShortTimeString(this DateTime time)
+        {
+            return time.ToString("h:mm:ss tt");
+        }
+
+        public static string ToShortTimeString(this DateTime? time, string nullValue = "")
+        {
+            if (time.HasValue)
+                return time.Value.ToShortTimeString();
+            else
+                return nullValue;
+        }
+
+        public static string ToShortDateTimeString(this DateTime dateTime)
+        {
+            return dateTime.ToShortDateString() + " " + dateTime.ToShortTimeString();
+        }
+
+        public static string ToShortDateTimeString(this DateTime? dateTime, string nullValue = "")
+        {
+            if (dateTime.HasValue)
+                return dateTime.Value.ToShortDateTimeString();
+            else
+                return nullValue;
+        }
+
         public static string FormatAsMonthDate(this DateTime date)
         {
             return date.ToString("MMMM yyyy");
@@ -218,6 +257,16 @@ namespace System
         }
 
         public static string FormatAsFileSystemSafeDateTime(this DateTime dateTime)
+        {
+            return dateTime.ToString("yyyy-MM-dd_HH-mm-ss");
+        }
+
+        public static string ToFileSystemSafeDateString(this DateTime dateTime)
+        {
+            return dateTime.ToString("yyyy-MM-dd");
+        }
+
+        public static string ToFileSystemSafeDateTimeString(this DateTime dateTime)
         {
             return dateTime.ToString("yyyy-MM-dd_HH-mm-ss");
         }

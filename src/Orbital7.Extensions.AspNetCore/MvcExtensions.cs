@@ -58,10 +58,10 @@ namespace Microsoft.AspNetCore.Mvc
             return htmlHelper.GetModelExplorer(expression).GetPropertyDisplayName();
         }
 
-        public static IHtmlContent EncodedReplace(this IHtmlHelper helper, string input, string pattern, string replacement)
-        {
-            return new HtmlString(Regex.Replace(helper.Encode(input), pattern, replacement));
-        }
+        //public static IHtmlContent EncodedReplace(this IHtmlHelper helper, string input, string pattern, string replacement)
+        //{
+        //    return new HtmlString(Regex.Replace(helper.Encode(input), pattern, replacement));
+        //}
 
         public static IHtmlContent DisplayCurrency(this IHtmlHelper helper, decimal? number, bool addSymbol = false, bool blankIfZero = false)
         {
@@ -69,6 +69,51 @@ namespace Microsoft.AspNetCore.Mvc
                 return new HtmlString("<span style='white-space: nowrap;'>" + number.Value.ToCurrency(addSymbol) + "</span>");
             else
                 return new HtmlString(String.Empty);
+        }
+
+        public static SelectList ToSelectList(this IEnumerable<Tuple<Guid, string>> items)
+        {
+            return new SelectList(items, "Item1", "Item2");
+        }
+
+        public static SelectList ToSelectList(this IEnumerable<Tuple<Guid, string>> items, Guid selectedKey)
+        {
+            return new SelectList(items, "Item1", "Item2", selectedKey);
+        }
+
+        public static SelectList ToSelectList(this IEnumerable<Tuple<string, string>> items)
+        {
+            return new SelectList(items, "Item1", "Item2");
+        }
+
+        public static SelectList ToSelectList(this IEnumerable<Tuple<string, string>> items, Guid selectedKey)
+        {
+            return new SelectList(items, "Item1", "Item2", selectedKey);
+        }
+
+        public static SelectList ToSelectList(this IEnumerable<string> items)
+        {
+            return new SelectList(items);
+        }
+
+        public static SelectList ToSelectList(this IEnumerable<string> items, object selectedItem)
+        {
+            return new SelectList(items, selectedItem);
+        }
+
+        public static SelectList ToSelectList(this IEnumerable<Guid> items)
+        {
+            return new SelectList(items);
+        }
+
+        public static SelectList ToSelectList(this IEnumerable<Guid> items, object selectedItem)
+        {
+            return new SelectList(items, selectedItem);
+        }
+
+        public static SelectList ToSelectList(this IEnumerable<SelectListItem> items)
+        {
+            return new SelectList(items, "Value", "Text");
         }
     }
 }

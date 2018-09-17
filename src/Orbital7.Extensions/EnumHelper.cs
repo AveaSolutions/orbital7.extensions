@@ -26,5 +26,6 @@ namespace Orbital7.Extensions
         {
             return (T)Enum.Parse(typeof(T), value);
         }
+
     }
 }
